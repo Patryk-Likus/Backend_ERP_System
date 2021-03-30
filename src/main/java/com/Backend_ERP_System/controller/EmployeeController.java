@@ -1,13 +1,14 @@
 package com.Backend_ERP_System.controller;
 
-import com.Backend_ERP_System.dto.EmployeeDto;
-import com.Backend_ERP_System.entity.Employee;
-import com.Backend_ERP_System.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.Backend_ERP_System.dto.EmployeeDto;
+import com.Backend_ERP_System.entity.Employee;
+import com.Backend_ERP_System.repository.EmployeeRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -17,19 +18,40 @@ public class EmployeeController {
     private final EmployeeRepository employeeRepository;
 
     @PostMapping("/employees")
-    public Employee newEmployee(@RequestBody Employee newEmployee){
-        return employeeRepository.save(newEmployee);
-
+    EmployeeDto saveOrUpdateEmployee(@RequestBody EmployeeDto dto){
+        if(dto.getIdEmployee() == null){
+            return EmployeeDto.of(employeeRepository.save(Employee.of(dto)));
+        } else {
+            Optional<Employee> optionalEmployee = employeeRepository.findById(dto.getIdEmployee());
+            if(optionalEmployee.isPresent()){
+                Employee employee = optionalEmployee.get();
+                employee.updateEmployee(dto);
+                return EmployeeDto.of(employeeRepository.save(employee));
+            } else {
+                throw new RuntimeException("Can't find user with given id: " + dto.getIdEmployee());
+            }
+        }
     }
 
     @GetMapping("/employees")
-    public List<EmployeeDto> listEmployees(){
-        return employeeRepository.findAll().stream().map(EmployeeDto::of).collect(Collectors.toList());
+    List<EmployeeDto> listEmployees(){
+        return employeeRepository.findAll()
+                .stream()
+                .map(EmployeeDto::of)
+                .collect(Collectors.toList());
     }
 
-    @DeleteMapping("/employees")
-    public ResponseEntity deleteEmployee(@RequestBody Long idEmployee){
+    @GetMapping("/employees/{idEmployee}")
+    public EmployeeDto getEmployee(@PathVariable Long idEmployee) throws InterruptedException {
+        Thread.sleep(500);
+        Optional<Employee> optionalEmployee = employeeRepository.findById(idEmployee);
+        return EmployeeDto.of(optionalEmployee.get());
+    }
+
+    @DeleteMapping("/employees/{idEmployee}")
+    ResponseEntity deleteEmployee(@PathVariable Long idEmployee){
         employeeRepository.deleteById(idEmployee);
         return ResponseEntity.ok().build();
     }
+
 }

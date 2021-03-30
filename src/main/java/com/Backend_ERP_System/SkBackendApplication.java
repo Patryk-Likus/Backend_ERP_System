@@ -4,9 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BackendErpSystemApplication {
+public class SkBackendApplication {
 
-    public static void main(String[] args){
-        SpringApplication.run(BackendErpSystemApplication.class, args);
+    public static void main(String[] args) {
+        SpringApplication.run(SkBackendApplication.class, args);
     }
+
 }

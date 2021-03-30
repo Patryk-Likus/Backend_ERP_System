@@ -1,5 +1,6 @@
 package com.Backend_ERP_System.entity;
 
+import com.Backend_ERP_System.dto.EmployeeDto;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 public class Employee {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEmployee;
 
     @Column
@@ -23,4 +24,18 @@ public class Employee {
 
     @OneToOne(mappedBy = "employee")
     private Operator operator;
+
+    public static Employee of(EmployeeDto dto){
+        Employee employee = new Employee();
+        employee.setFirstName(dto.getFirstName());
+        employee.setLastName(dto.getLastName());
+        employee.setSalary(dto.getSalary());
+        return employee;
+    }
+
+    public void updateEmployee(EmployeeDto dto) {
+        this.setFirstName(dto.getFirstName());
+        this.setLastName(dto.getLastName());
+        this.setSalary(dto.getSalary());
+    }
 }

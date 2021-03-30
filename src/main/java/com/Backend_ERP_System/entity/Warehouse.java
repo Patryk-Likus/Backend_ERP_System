@@ -3,19 +3,20 @@ package com.Backend_ERP_System.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Data
 public class Warehouse {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idWarehouse;
 
     @Column
     private String name;
 
-    @ManyToMany(mappedBy = "warehouses")
-   private Set<Item> items;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "warehouse")
+    private List<Item> items;
+
 }

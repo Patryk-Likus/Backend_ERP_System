@@ -1,7 +1,7 @@
 package com.Backend_ERP_System.dto;
 
-import com.Backend_ERP_System.entity.Employee;
 import lombok.Data;
+import com.Backend_ERP_System.entity.Employee;
 
 @Data
 public class EmployeeDto {

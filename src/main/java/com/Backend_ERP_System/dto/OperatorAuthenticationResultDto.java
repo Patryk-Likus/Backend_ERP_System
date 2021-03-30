@@ -1,7 +1,7 @@
 package com.Backend_ERP_System.dto;
 
-import com.Backend_ERP_System.entity.Operator;
 import lombok.Data;
+import com.Backend_ERP_System.entity.Operator;
 
 @Data
 public class OperatorAuthenticationResultDto {
@@ -14,8 +14,9 @@ public class OperatorAuthenticationResultDto {
     public static OperatorAuthenticationResultDto createUnauthenticated(){
         OperatorAuthenticationResultDto dto = new OperatorAuthenticationResultDto();
         dto.setAuthenticated(false);
-        return  dto;
+        return dto;
     }
+
     public static OperatorAuthenticationResultDto of(Operator operator){
         OperatorAuthenticationResultDto dto = new OperatorAuthenticationResultDto();
         dto.setAuthenticated(true);
@@ -24,4 +25,8 @@ public class OperatorAuthenticationResultDto {
         dto.setIdOperator(operator.getIdOperator());
         return dto;
     }
+
+
+
+
 }

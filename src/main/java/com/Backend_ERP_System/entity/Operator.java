@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Operator {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idOperator;
 
     @Column
@@ -19,7 +19,7 @@ public class Operator {
     private String password;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "idEmployee")
+    @JoinColumn(name= "idEmployee")
     private Employee employee;
 
 }
