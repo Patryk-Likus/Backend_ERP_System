@@ -1,3 +1,3 @@
 # Backend_ERP_System
 
-in progress
+This is backend server erp's system. Detail description in repository about name "ERP_System".
